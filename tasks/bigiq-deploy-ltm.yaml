@@ -1,0 +1,23 @@
+---
+
+- name: Show objects
+  debug:
+    msg: "Name: {{ object_name }} - Type: {{ object_type }}"
+
+# Get the device ID
+- name: Get machineID of the device where the object will be pinned
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices?$filter=address%20eq%20'{{ device_address }}...{{ device_address }}'"
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+
+- name: Get the machineID of the specified BIG-IP
+  set_fact:
+    machine_id: "{{ json_response | json_query(query) | join(' ') }}"
+  vars: 
+    query: "json.items[?address=='{{ device_address }}'].machineId"
+

@@ -1,0 +1,18 @@
+---
+validate_certs: false
+timeout: 120
+
+ltm:
+  - { type: "sslCertReferences", name: "demo.crt" } # SSL Certificates
+  - { type: "sslKeyReferences", name: "demo.key" } # SSL Keys
+
+
+# Application Services: applicationServiceReferences **NOT IMPLEMENTED YET**
+# FEC Tunnel Profiles: fecTunnelReferences **NOT IMPLEMENTED YET**
+# Folders: folderReferences **NOT IMPLEMENTED YET**
+# Log Publishers: logPublisherReferences **NOT IMPLEMENTED YET**
+# PCP Profiles: profilePcpReferences **NOT IMPLEMENTED YET**
+# iRules: iruleReferences  **NOT IMPLEMENTED YET**
+
+device_address: 10.192.75.187
+

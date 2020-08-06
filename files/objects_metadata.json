@@ -1,0 +1,14 @@
+{
+    "components": {
+        "ltm": {
+            "endpoints": {
+                "sslCertReferences": {
+                    "uri": "/mgmt/cm/adc-core/working-config/sys/file/ssl-cert"
+                },
+                "sslKeyReferences": {
+                    "uri": "/mgmt/cm/adc-core/working-config/sys/file/ssl-key"
+                }           
+            }
+        }
+    }
+}
