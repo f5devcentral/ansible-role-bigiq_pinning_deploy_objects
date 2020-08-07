@@ -2,17 +2,16 @@
 validate_certs: false
 timeout: 120
 
+# name of the deployment task in BIG-IQ
+bigiq_task_name: "Deployment through Ansible/API"
+
 ltm:
   - { type: "sslCertReferences", name: "demo.crt" } # SSL Certificates
   - { type: "sslKeyReferences", name: "demo.key" } # SSL Keys
+#  - { type: "folderReferences", name: "myFolder" } # Folders **NOT IMPLEMENTED**
+#  - { type: "logPublisherReferences", name: "myLogPublisher" } # Log Publishers **NOT IMPLEMENTED**
+#  - { type: "iruleReferences", name: "myIrule" } # iRules **NOT IMPLEMENTED**
 
-
-# Application Services: applicationServiceReferences **NOT IMPLEMENTED YET**
-# FEC Tunnel Profiles: fecTunnelReferences **NOT IMPLEMENTED YET**
-# Folders: folderReferences **NOT IMPLEMENTED YET**
-# Log Publishers: logPublisherReferences **NOT IMPLEMENTED YET**
-# PCP Profiles: profilePcpReferences **NOT IMPLEMENTED YET**
-# iRules: iruleReferences  **NOT IMPLEMENTED YET**
-
-device_address: 10.192.75.187
+device_address: 10.1.1.7
+#device_name: bigip.example.com
 

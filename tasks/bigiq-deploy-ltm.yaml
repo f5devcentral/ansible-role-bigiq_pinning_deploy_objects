@@ -1,23 +1,73 @@
 ---
 
-- name: Show objects
-  debug:
-    msg: "Name: {{ object_name }} - Type: {{ object_type }}"
+- name: Set Objets metadata
+  set_fact:
+    objects_metadata: "{{ lookup('file', 'files/objects_metadata.json', errors='strict') }}"
 
-# Get the device ID
-- name: Get machineID of the device where the object will be pinned
+- name: Get object details 
   uri:
-    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices?$filter=address%20eq%20'{{ device_address }}...{{ device_address }}'"
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['ltm']['endpoints'][object_type]['uri'] }}?$filter=name%20eq%20'{{ object_name }}'"
     method: GET
     timeout: "{{ timeout }}"
     validate_certs: "{{ validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
+  vars:
+    object_name: "{{ item.name }}"
+    object_type: "{{ item.type }}"
+  with_items: "{{ ltm }}"
 
-- name: Get the machineID of the specified BIG-IP
+- name: Initiate objects_deploy List
   set_fact:
-    machine_id: "{{ json_response | json_query(query) | join(' ') }}"
-  vars: 
-    query: "json.items[?address=='{{ device_address }}'].machineId"
+    objects_deploy: []
 
+- name: Build objects_deploy
+  set_fact:
+    objects_deploy: "{{ objects_deploy + [{ 'link': item }] }}"
+  loop: "{{ json_response | json_query('results[*].json.items[0].selfLink') }}"
+
+- debug:
+    var: objects_deploy
+
+- name: Deploy object to the device
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/adc-core/tasks/deploy-configuration"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    body: |
+      {
+          "skipVerifyConfig": false,
+          "skipDistribution": false,
+          "snapshotReference": null,
+          "objectsToDeployReferences": {{ objects_deploy }},
+          "deviceReferences": [
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id }}"
+              }
+          ],
+          "deploySpecifiedObjectsOnly": false,
+          "name": "{{ bigiq_task_name }},"
+      }
+    body_format: json
+    status_code: 202
+  register: json_response
+
+- name: Check deployment status
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/adc-core/tasks/deploy-configuration/{{ json_response.json.id }}"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+  until: status.json.status in ['FINISHED', 'FAILED']
+  retries: 40
+  delay: 10
+  failed_when: "'FAILED' in status.json.status"
+  changed_when: "'FINISHED' in status.json.status"

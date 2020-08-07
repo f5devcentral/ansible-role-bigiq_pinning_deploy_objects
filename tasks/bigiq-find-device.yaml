@@ -1,0 +1,46 @@
+---
+
+# Get the device ID when an device IP is given
+- name: Get machineID of the device where the object will be pinned with IP address
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices?$filter=address%20eq%20'{{ device_address }}...{{ device_address }}'"
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+  when: 
+    - device_address is defined
+
+- name: Get the machineID of the specified BIG-IP with IP address
+  set_fact:
+    machine_id: "{{ json_response | json_query(query) | join(' ') }}"
+  vars: 
+    query: "json.items[?address=='{{ device_address }}'].machineId"
+  when: 
+    - device_address is defined
+
+# Get the device ID when an device hostname/DNS is given
+- name: Get machineID of the device where the object will be pinned with name
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices?$filter=hostname%20eq%20'{{ device_name }}'"
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+  when: 
+    - device_name is defined
+
+- name: Get the machineID of the specified BIG-IP with name
+  set_fact:
+    machine_id: "{{ json_response | json_query(query) | join(' ') }}"
+  vars: 
+    query: "json.items[?hostname=='{{ device_name }}'].machineId"
+  when: 
+    - device_name is defined
+
+- debug:
+    var: machine_id

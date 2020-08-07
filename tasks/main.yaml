@@ -67,6 +67,9 @@
     msg: "Name: {{ object_name }} - Type: {{ object_type }}"
   with_items: "{{ ltm }}"
 
+- name: Run task to find device in BIG-IQ
+  include_tasks: "bigiq-find-device.yaml"
+
 - name: Run task Pinning Policies LTM objects
   include_tasks: "bigiq-pinning-ltm.yaml"
   vars:
@@ -76,7 +79,3 @@
 
 - name: Run task deploy LTM objects to BIG-IP
   include_tasks: "bigiq-deploy-ltm.yaml"
-  vars:
-    object_name: "{{ item.name }}"
-    object_type: "{{ item.type }}"
-  with_items: "{{ ltm }}"
