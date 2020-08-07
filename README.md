@@ -4,9 +4,7 @@ Performs a series of steps needed to pin and deploy BIG-IQ object(s) to a BIG-IP
 
 This role currently supports only SSL Certificates and Keys.
 
-If you are interested for other type of objects, `open an issue on GitHub`_.
-
-.. _Open an issue on GitHub: https://github.com/f5devcentral/ansible-role-bigiq_pinning_deploy_objects/issues
+If you are interested for other type of objects, [open an issue on GitHub](https://github.com/f5devcentral/ansible-role-bigiq_pinning_deploy_objects/issues).
 
 ## Requirements
 
