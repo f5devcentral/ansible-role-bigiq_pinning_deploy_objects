@@ -29,28 +29,28 @@ for the **CM BIG-IP** device.
 
 ## Example Playbook
 
----
-- hosts: all
-  connection: local
-  vars:
-    provider:
-      user: admin
-      server: "{{ ansible_host }}"
-      server_port: 443
-      password: secret
-      loginProviderName: tmos
-      validate_certs: no
-      
-  tasks:
-      - name: Pin and deploy SSL certificate and key to device
-        include_role:
-          name: ansible-role-bigiq_pinning_deploy_objects
-        vars:
-          ltm: 
-            - { type: "sslCertReferences", name: "demo.crt" }
-            - { type: "sslKeyReferences", name: "demo.key" }
-          device_address: 10.1.1.7
-        register: status
+    ---
+    - hosts: all
+      connection: local
+      vars:
+        provider:
+          user: admin
+          server: "{{ ansible_host }}"
+          server_port: 443
+          password: secret
+          loginProviderName: tmos
+          validate_certs: no
+
+      tasks:
+          - name: Pin and deploy SSL certificate and key to device
+            include_role:
+              name: ansible-role-bigiq_pinning_deploy_objects
+            vars:
+              ltm: 
+                - { type: "sslCertReferences", name: "demo.crt" }
+                - { type: "sslKeyReferences", name: "demo.key" }
+              device_address: 10.1.1.7
+            register: status
 
 ## License
 
