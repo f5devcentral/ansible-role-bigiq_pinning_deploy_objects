@@ -50,7 +50,7 @@
               }
           ],
           "deploySpecifiedObjectsOnly": false,
-          "name": "{{ bigiq_task_name }},"
+          "name": "{{ bigiq_task_name }}"
       }
     body_format: json
     status_code: 202
