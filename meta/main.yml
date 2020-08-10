@@ -2,9 +2,9 @@
 dependencies: []
 
 galaxy_info:
-  role_name: bigiq_pinning_policies
+  role_name: bigiq_pinning_deploy_objects
   author: rjouhann
-  description: Pin objects and deploy to a BIG-IP
+  description: Pin objects on BIG-IQ and deploy it BIG-IP(s)
   company: F5 Networks
   license: Apache
   min_ansible_version: 2.7

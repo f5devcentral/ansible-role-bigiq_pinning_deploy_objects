@@ -1,4 +1,5 @@
 ---
 
 # from galaxy
-- src: f5devcentral.bigiq_onboard
+- src: f5devcentral.bigiq_pinning_deploy_objects
+
