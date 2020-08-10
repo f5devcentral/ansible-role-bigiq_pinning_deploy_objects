@@ -44,7 +44,7 @@ for the **CM BIG-IP** device.
       tasks:
           - name: Pin and deploy SSL certificate and key to device
             include_role:
-              name: ansible-role-bigiq_pinning_deploy_objects
+              name: bigiq_pinning_deploy_objects
             vars:
               ltm: 
                 - { type: "sslCertReferences", name: "demo.crt" }
