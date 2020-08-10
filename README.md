@@ -12,7 +12,12 @@ None.
 
 ## Role Variables
 
-Available variables are listed below. For their default values, see `defaults/main.yml`:
+Available variables are listed below. For their default values, see `defaults/main.yml`.
+
+Establishes initial connection to your BIG-IQ. These values are substituted into
+your ``provider`` module parameter. These values should be the connection parameters
+for the **CM BIG-IP** device.
+
 
     provider_server: localhost
     provider_server_port: 443
@@ -23,9 +28,15 @@ Available variables are listed below. For their default values, see `defaults/ma
     provider_transport: rest
     provider_timeout: 120
 
-Establishes initial connection to your BIG-IQ. These values are substituted into
-your ``provider`` module parameter. These values should be the connection parameters
-for the **CM BIG-IP** device.
+Define the list of existing objects you want to pin and deploy to a BIG-IP device.
+
+    ltm: 
+      - { type: "sslCertReferences", name: "demo.crt" }
+      - { type: "sslKeyReferences", name: "demo.key" }
+
+## Dependencies
+
+None.
 
 ## Example Playbook
 
