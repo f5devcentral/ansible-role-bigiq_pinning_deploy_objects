@@ -1,5 +1,4 @@
 ---
-
 # Get the device ID when an device IP is given
 - name: Get machineID of the device where the object will be pinned with IP address
   uri:

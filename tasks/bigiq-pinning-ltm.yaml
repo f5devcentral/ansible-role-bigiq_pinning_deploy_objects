@@ -1,5 +1,4 @@
 ---
-
 - name: Show objects
   debug:
     msg: "Name: {{ object_name }} - Type: {{ object_type }}"

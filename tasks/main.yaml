@@ -1,5 +1,4 @@
 ---
-
 - name: Setup provider and varables
   set_fact:
     provider: "{{ provider }}"

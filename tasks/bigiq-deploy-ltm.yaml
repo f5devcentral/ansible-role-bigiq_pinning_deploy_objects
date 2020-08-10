@@ -1,5 +1,4 @@
 ---
-
 - name: Set Objets metadata
   set_fact:
     objects_metadata: "{{ lookup('file', 'files/objects_metadata.json', errors='strict') }}"
