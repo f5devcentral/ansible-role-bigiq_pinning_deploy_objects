@@ -9,9 +9,10 @@ galaxy_info:
   license: Apache
   min_ansible_version: 2.7
   platforms:
-    - name: TMOS
+    - name: BIG-IQ
       versions:
-        - all
+        - 7.0
+        - 7.1
   galaxy_tags:
     - f5
     - bigiq
