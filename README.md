@@ -6,37 +6,27 @@ This role currently supports only SSL Certificates and Keys.
 
 If you are interested for other type of objects, [open an issue on GitHub](https://github.com/f5devcentral/ansible-role-bigiq_pinning_deploy_objects/issues).
 
-## Requirements
-
-None.
-
 ## Role Variables
 
 Available variables are listed below. For their default values, see `defaults/main.yml`.
 
 Establishes initial connection to your BIG-IQ. These values are substituted into
 your ``provider`` module parameter. These values should be the connection parameters
-for the **CM BIG-IP** device.
+for the **CM BIG-IQ** device.
 
-
-    provider_server: localhost
-    provider_server_port: 443
-    provider_user: admin
-    provider_password: secret
-    provider_loginProviderName: tmos
-    provider_validate_certs: false
-    provider_transport: rest
-    provider_timeout: 120
+        provider:
+          user: admin
+          server: 10.1.1.4
+          server_port: 443
+          password: secret
+          loginProviderName: tmos
+          validate_certs: no
 
 Define the list of existing objects you want to pin and deploy to a BIG-IP device.
 
     ltm: 
       - { type: "sslCertReferences", name: "demo.crt" }
       - { type: "sslKeyReferences", name: "demo.key" }
-
-## Dependencies
-
-None.
 
 ## Example Playbook
 
