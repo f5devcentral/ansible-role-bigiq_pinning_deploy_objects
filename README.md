@@ -2,7 +2,7 @@
 
 Performs a series of steps needed to pin and deploy BIG-IQ object(s) to a BIG-IP device managed on BIG-IQ.
 
-This role currently supports only SSL Certificates and Keys.
+This role currently supports only SSL Certificates & Keys, WAF Policy and Security Logging Profiles.
 
 If you are interested for other type of objects, [open an issue on GitHub](https://github.com/f5devcentral/ansible-role-bigiq_pinning_deploy_objects/issues).
 
@@ -24,9 +24,22 @@ for the **CM BIG-IQ** device.
 
 Define the list of existing objects you want to pin and deploy to a BIG-IP device.
 
-    ltm: 
-      - { type: "sslCertReferences", name: "demo.crt" }
-      - { type: "sslKeyReferences", name: "demo.key" }
+    modules: 
+      - name: ltm
+        pins:
+          - { type: "sslCertReferences", name: "demo.crt" }
+          - { type: "sslKeyReferences", name: "demo.key" }
+      - name: asm
+        pins:
+          - { type: "attachedPoliciesReferences", name: "myWAFpolicy1" }
+          - { type: "attachedPoliciesReferences", name: "myWAFpolicy2" }
+      - name: shared_security
+        pins:
+          - { type: "logProfileReferences", name: "mySecurityLoggingProfile" }
+
+Also, the Deloyment Task Name can be customized.
+
+    bigiq_task_name: "Deployment through Ansible/API"
 
 ## Example Playbook
 
@@ -43,13 +56,23 @@ Define the list of existing objects you want to pin and deploy to a BIG-IP devic
           validate_certs: no
 
       tasks:
-          - name: Pin and deploy SSL certificate and key to device
+          - name: Pin and deploy SSL certificate & key, WAF policy and Security Logging Profile to device
             include_role:
               name: bigiq_pinning_deploy_objects
             vars:
-              ltm: 
-                - { type: "sslCertReferences", name: "demo.crt" }
-                - { type: "sslKeyReferences", name: "demo.key" }
+              bigiq_task_name: "Deployment through Ansible/API"
+            modules: 
+              - name: ltm
+                pins:
+                  - { type: "sslCertReferences", name: "demo.crt" }
+                  - { type: "sslKeyReferences", name: "demo.key" }
+              - name: asm
+                pins:
+                  - { type: "attachedPoliciesReferences", name: "myWAFpolicy1" }
+                  - { type: "attachedPoliciesReferences", name: "myWAFpolicy2" }
+              - name: shared_security
+                pins:
+                  - { type: "logProfileReferences", name: "mySecurityLoggingProfile" }
               device_address: 10.1.1.7
             register: status
 

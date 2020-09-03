@@ -5,12 +5,18 @@ timeout: 120
 # name of the deployment task in BIG-IQ
 bigiq_task_name: "Deployment through Ansible/API"
 
-ltm:
-  - { type: "sslCertReferences", name: "demo.crt" } # SSL Certificates
-  - { type: "sslKeyReferences", name: "demo.key" } # SSL Keys
-#  - { type: "folderReferences", name: "myFolder" } # Folders **NOT IMPLEMENTED**
-#  - { type: "logPublisherReferences", name: "myLogPublisher" } # Log Publishers **NOT IMPLEMENTED**
-#  - { type: "iruleReferences", name: "myIrule" } # iRules **NOT IMPLEMENTED**
+modules: 
+  - name: ltm
+    pins:
+      - { type: "sslCertReferences", name: "demo.crt" }
+      - { type: "sslKeyReferences", name: "demo.key" }
+  - name: asm
+    pins:
+      - { type: "attachedPoliciesReferences", name: "myWAFpolicy1" }
+      - { type: "attachedPoliciesReferences", name: "myWAFpolicy2" }
+  - name: shared_security
+    pins:
+      - { type: "logProfileReferences", name: "mySecurityLoggingProfile" }
 
 device_address: 10.1.1.7
 #device_name: bigip.example.com

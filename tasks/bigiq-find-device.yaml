@@ -41,5 +41,5 @@
   when: 
     - device_name is defined
 
-- debug:
-    var: machine_id
+#- debug:
+#    var: machine_id

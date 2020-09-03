@@ -60,21 +60,27 @@
 
 - name: Show all objects to be pinned and deployed
   vars:
-    object_name: "{{ item.name }}"
-    object_type: "{{ item.type }}"
+    module: "{{ item.0.name }}"
+    object_name: "{{ item.1.name }}"
+    object_type: "{{ item.1.type }}"
   debug:
-    msg: "Name: {{ object_name }} - Type: {{ object_type }}"
-  with_items: "{{ ltm }}"
+    msg: "Module: {{ module }} - Name: {{ object_name }} - Type: {{ object_type }}"
+  with_subelements:
+    - "{{ modules }}"
+    - pins
 
 - name: Run task to find device in BIG-IQ
   include_tasks: "bigiq-find-device.yaml"
 
-- name: Run task Pinning Policies LTM objects
-  include_tasks: "bigiq-pinning-ltm.yaml"
+- name: Run task Pinning objects
+  include_tasks: "bigiq-pinning.yaml"
   vars:
-    object_name: "{{ item.name }}"
-    object_type: "{{ item.type }}"
-  with_items: "{{ ltm }}"
+    module: "{{ item.0.name }}"
+    object_name: "{{ item.1.name }}"
+    object_type: "{{ item.1.type }}"
+  with_subelements:
+    - "{{ modules }}"
+    - pins
 
-- name: Run task deploy LTM objects to BIG-IP
-  include_tasks: "bigiq-deploy-ltm.yaml"
+- name: Run task deploy objects to BIG-IP
+  include_tasks: "bigiq-deploy.yaml"
