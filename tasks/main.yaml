@@ -69,9 +69,12 @@
     - "{{ modules }}"
     - pins
 
+# Only identify Standalone and Cluster (with max 2 devices)
 - name: Run task to find device in BIG-IQ
   include_tasks: "bigiq-find-device.yaml"
 
+# Need to pin only to one device even if part of the cluster, BIG-IQ will add it automatically to the other members
+# machine_id2 is not used
 - name: Run task Pinning objects
   include_tasks: "bigiq-pinning.yaml"
   vars:
@@ -82,5 +85,7 @@
     - "{{ modules }}"
     - pins
 
+# For deployment, need to specify all members of the cluster
+# machine_id2 is used for clusters here
 - name: Run task deploy objects to BIG-IP
   include_tasks: "bigiq-deploy.yaml"

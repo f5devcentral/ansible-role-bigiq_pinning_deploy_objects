@@ -5,6 +5,9 @@ timeout: 120
 # name of the deployment task in BIG-IQ
 bigiq_task_name: "Deployment through Ansible/API"
 
+device_address: 10.1.1.7
+#device_name: bigip.example.com
+
 modules: 
   - name: ltm
     pins:
@@ -17,6 +20,3 @@ modules:
   - name: shared_security
     pins:
       - { type: "logProfileReferences", name: "mySecurityLoggingProfile" }
-
-device_address: 10.1.1.7
-#device_name: bigip.example.com

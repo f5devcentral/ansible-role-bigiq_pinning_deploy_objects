@@ -22,7 +22,7 @@ for the **CM BIG-IQ** device.
           loginProviderName: tmos
           validate_certs: no
 
-Define the list of existing objects you want to pin and deploy to a BIG-IP device.
+Define the list of existing objects you want to pin and deploy.
 
     modules: 
       - name: ltm
@@ -37,7 +37,18 @@ Define the list of existing objects you want to pin and deploy to a BIG-IP devic
         pins:
           - { type: "logProfileReferences", name: "mySecurityLoggingProfile" }
 
-Also, the Deloyment Task Name can be customized.
+Define the target device where you want to pin and deploy the objects.
+It can be either device_address or device_name.
+If you are deploying to a HA pair, only specify one of the device address or name, the role will push automatically to 
+all the devices part of the cluster (supports only clusters with 2 devices).
+
+    device_address: 10.1.1.7
+
+or
+
+    device_name: bigip.example.com
+
+Define the deployment Task Name (optional):
 
     bigiq_task_name: "Deployment through Ansible/API"
 
@@ -61,19 +72,19 @@ Also, the Deloyment Task Name can be customized.
               name: bigiq_pinning_deploy_objects
             vars:
               bigiq_task_name: "Deployment through Ansible/API"
-            modules: 
-              - name: ltm
-                pins:
-                  - { type: "sslCertReferences", name: "demo.crt" }
-                  - { type: "sslKeyReferences", name: "demo.key" }
-              - name: asm
-                pins:
-                  - { type: "attachedPoliciesReferences", name: "myWAFpolicy1" }
-                  - { type: "attachedPoliciesReferences", name: "myWAFpolicy2" }
-              - name: shared_security
-                pins:
-                  - { type: "logProfileReferences", name: "mySecurityLoggingProfile" }
               device_address: 10.1.1.7
+              modules: 
+                - name: ltm
+                  pins:
+                    - { type: "sslCertReferences", name: "demo.crt" }
+                    - { type: "sslKeyReferences", name: "demo.key" }
+                - name: asm
+                  pins:
+                    - { type: "attachedPoliciesReferences", name: "myWAFpolicy1" }
+                    - { type: "attachedPoliciesReferences", name: "myWAFpolicy2" }
+                - name: shared_security
+                  pins:
+                    - { type: "logProfileReferences", name: "mySecurityLoggingProfile" }
             register: status
 
 ## License
