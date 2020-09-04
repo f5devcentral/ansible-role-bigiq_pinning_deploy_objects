@@ -19,7 +19,7 @@
   register: json_response
   when: module != "asm"
 
-- name: Get the ID of the Device under Pinning Policy or Inactive Virtual Server
+- name: Get the ID of the Device under Pinning Policy - Any LTM or Shared Security objects but ASM
   set_fact:
     object_pinning_id: "{{ json_response | json_query(query) }}"
   vars: 
@@ -27,15 +27,12 @@
   when: module != "asm"
 
 # Get existing object already pin on the device
-- name: Get the existing objects
+- name: Get the existing objects - Any LTM or Shared Security objects but ASM
   set_fact:
     existing_objects: "{{ json_response | json_query(query) }}"
   vars: 
     query: "json.items[0].{{ object_type }}"
   when: module != "asm"
-
-#- debug:
-#    var: existing_objects
 
 # Get device under Inactive Virtual Server
 - name: Get existing objects pinned on the device - ASM only
@@ -49,7 +46,7 @@
   register: json_response
   when: module == "asm"
 
-- name: Get the ID of the Device under Pinning Policy or Inactive Virtual Server
+- name: Get the ID of the Device under Inactive Virtual Server - ASM only
   set_fact:
     object_pinning_id: "{{ json_response | json_query(query) }}"
   vars: 
@@ -57,13 +54,14 @@
   when: module == "asm"
 
 # Get existing object already pin on the device
-- name: Get the existing objects
+- name: Get the existing objects - ASM only
   set_fact:
     existing_objects: "{{ json_response | json_query(query) }}"
   vars: 
     query: "json.items[0].{{ object_type }}"
   when: module == "asm"
 
+# Common part
 #- debug:
 #    var: existing_objects
 
@@ -89,22 +87,13 @@
   vars: 
     query: "json.items[0].id"
 
-- name: Look if the object is already pin, if it is, no need to pin it again
-  set_fact:
-    objects_already_exist: yes
-  when: existing_objects | selectattr(search_key,'equalto',search_val) | list | count > 0
-  vars:
-    search_key: id
-    search_val: "{{ object_id }}"
-
-- debug:
-    var: objects_already_exist
-
+# Not ASM
 - name: new array of the object to pin - Any LTM or Shared Security objects but ASM
   set_fact:
     new_object_pin: '{ "id": "{{ object_id }}", "kind": "{{ object_kind }}", "link": "https://localhost{{ objects_metadata["components"][module]["endpoints"][object_type]["uri"] }}/{{ object_id }}", "name": "{{ object_name }}"}'
   when: module != "asm"
 
+# ASM
 - name: new array of the object to pin - ASM only
   set_fact:
     new_object_pin: '{ "link": "https://localhost{{ objects_metadata["components"][module]["endpoints"][object_type]["uri"] }}/{{ object_id }}"}'
@@ -117,7 +106,13 @@
   set_fact:
     all_objects: "{{ existing_objects + [ new_object_pin ] }}"
 
-- name: Pinning objects to the device - Any LTM or Shared Security objects but ASM
+#- debug:
+#    var: existing_objects
+
+#- debug:
+#    var: object_id
+
+- name: Pinning objects to the device
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}/{{ object_pinning_id }}"
     method: PATCH
@@ -133,4 +128,8 @@
       }
     body_format: json
   register: json_response
-  when: objects_already_exist is not defined
+  # Look if the object is already pin, if it is, no need to pin it again
+  when: existing_objects | selectattr(search_key,'equalto',search_val) | list | count == 0
+  vars:
+    search_key: id
+    search_val: "{{ object_id }}"
