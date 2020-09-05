@@ -69,7 +69,7 @@ Define the deployment Task Name (optional):
       tasks:
           - name: Pin and deploy SSL certificate & key, WAF policy and Security Logging Profile to device
             include_role:
-              name: bigiq_pinning_deploy_objects
+              name: f5devcentral.bigiq_pinning_deploy_objects
             vars:
               bigiq_task_name: "Deployment through Ansible/API"
               device_address: 10.1.1.7
