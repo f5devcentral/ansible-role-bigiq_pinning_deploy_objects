@@ -87,6 +87,9 @@
   vars: 
     query: "json.items[0].id"
 
+- fail: msg="Not able to retreive the object_id. Please check the object exist in BIG-IQ or re-try."
+  when: object_id|length == 0
+
 # Not ASM
 - name: new array of the object to pin - Any LTM or Shared Security objects but ASM
   set_fact:
@@ -123,7 +126,7 @@
       X-F5-Auth-Token: "{{ f5_auth_token }}"
     body: |
       {
-        "id": "{{ object_id }}",
+        "id": "{{ object_pinning_id }}",
         "{{ object_type }}": {{ all_objects }}
       }
     body_format: json
