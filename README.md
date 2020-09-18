@@ -23,7 +23,7 @@ for the **CM BIG-IQ** device.
           server: 10.1.1.4
           server_port: 443
           password: secret
-          loginProviderName: tmos
+          auth_provider: tmos
           validate_certs: no
 
 Define the list of existing objects you want to pin and deploy.
@@ -67,7 +67,7 @@ Define the deployment Task Name (optional):
           server: "{{ ansible_host }}"
           server_port: 443
           password: secret
-          loginProviderName: tmos
+          auth_provider: tmos
           validate_certs: no
 
       tasks:
