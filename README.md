@@ -6,6 +6,10 @@ This role currently supports only SSL Certificates & Keys, WAF Policy and Securi
 
 If you are interested for other type of objects, [open an issue on GitHub](https://github.com/f5devcentral/ansible-role-bigiq_pinning_deploy_objects/issues).
 
+This role is perfect to use along with [F5 automation tool chain (ATC) deploy declaration](https://galaxy.ansible.com/f5devcentral/atc_deploy) galaxy role used 
+to deploy AS3 application services with BIG-IQ.
+
+
 ## Role Variables
 
 Available variables are listed below. For their default values, see `defaults/main.yml`.
