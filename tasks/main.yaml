@@ -3,6 +3,11 @@
   set_fact:
     provider: "{{ provider }}"
 
+- name: Take value validate_certs from provider if defined
+  set_fact:
+    validate_certs: "{{ provider.validate_certs }}"
+  when: provider.validate_certs is defined
+
 - name: Get authentication token
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/authn/login"
