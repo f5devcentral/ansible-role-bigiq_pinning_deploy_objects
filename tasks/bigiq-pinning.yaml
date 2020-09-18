@@ -13,7 +13,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}?$filter=deviceReference.machineId%20eq%20'{{ machine_id }}'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
@@ -40,7 +40,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}?$filter=deviceReference.machineId%20eq%20'{{ machine_id }}'%20and%20name%20eq%20'inactive'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
@@ -70,7 +70,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints'][object_type]['uri'] }}?$filter=name%20eq%20'{{ object_name }}'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
@@ -120,7 +120,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}/{{ object_pinning_id }}"
     method: PATCH
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"

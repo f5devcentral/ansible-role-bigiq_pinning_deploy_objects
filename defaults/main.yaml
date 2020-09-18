@@ -1,5 +1,4 @@
 ---
-validate_certs: false
 timeout: 120
 
 # name of the deployment task in BIG-IQ

@@ -5,7 +5,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices?$filter=address%20eq%20'{{ device_address }}...{{ device_address }}'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
@@ -35,7 +35,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices?$filter=address%20ne%20'{{ device_address }}'%20and%20properties.clusterName%20eq%20'{{ clusterName }}'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
@@ -61,7 +61,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices?$filter=hostname%20eq%20'{{ device_name }}'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
@@ -91,7 +91,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices?$filter=address%20ne%20'{{ device_name }}'%20and%20properties.clusterName%20eq%20'{{ clusterName }}'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response

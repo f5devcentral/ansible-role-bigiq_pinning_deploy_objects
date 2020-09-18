@@ -9,7 +9,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][item.0.name]['endpoints'][object_type]['uri'] }}?$filter=name%20eq%20'{{ object_name }}'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
@@ -38,7 +38,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['ltm']['endpoints']['deploy']['uri'] }}"
     method: POST
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -67,7 +67,7 @@
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['ltm']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -86,7 +86,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['ltm']['endpoints']['deploy']['uri'] }}"
     method: POST
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -118,7 +118,7 @@
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['ltm']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -138,7 +138,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][item.0.name]['endpoints'][object_type]['uri'] }}?$filter=name%20eq%20'{{ object_name }}'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
@@ -167,7 +167,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['shared_security']['endpoints']['deploy']['uri'] }}"
     method: POST
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -196,7 +196,7 @@
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['shared_security']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -215,7 +215,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['shared_security']['endpoints']['deploy']['uri'] }}"
     method: POST
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -247,7 +247,7 @@
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['shared_security']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -267,7 +267,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][item.0.name]['endpoints'][object_type]['uri'] }}?$filter=name%20eq%20'{{ object_name }}'"
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
   register: json_response
@@ -296,7 +296,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['asm']['endpoints']['deploy']['uri'] }}"
     method: POST
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -325,7 +325,7 @@
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['asm']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -344,7 +344,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['asm']['endpoints']['deploy']['uri'] }}"
     method: POST
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -376,7 +376,7 @@
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['asm']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"

@@ -24,7 +24,7 @@ for the **CM BIG-IQ** device.
           server_port: 443
           password: secret
           auth_provider: tmos
-          validate_certs: no
+          validate_certs: false
 
 Define the list of existing objects you want to pin and deploy.
 
@@ -68,7 +68,7 @@ Define the deployment Task Name (optional):
           server_port: 443
           password: secret
           auth_provider: tmos
-          validate_certs: no
+          validate_certs: false
 
       tasks:
           - name: Pin and deploy SSL certificate & key, WAF policy and Security Logging Profile to device
