@@ -87,7 +87,8 @@
   vars: 
     query: "json.items[0].id"
 
-- fail: msg="Not able to retreive the object_id. Please check the object exist in BIG-IQ or re-try."
+- name: Get object_id
+  fail: msg="Not able to retreive the object_id. Please check the object exist in BIG-IQ or re-try."
   when: object_id|length == 0
 
 # Not ASM
