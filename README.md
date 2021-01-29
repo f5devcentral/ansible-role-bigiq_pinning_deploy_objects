@@ -2,7 +2,7 @@
 
 Performs a series of steps needed to pin and deploy BIG-IQ object(s) to a BIG-IP device managed on BIG-IQ.
 
-This role currently supports only SSL Certificates & Keys, WAF Policy and Security Logging Profiles.
+This role currently supports only SSL Certificates & Keys, iRule, WAF Policy and Security Logging Profiles.
 
 If you are interested for other type of objects, [open an issue on GitHub](https://github.com/f5devcentral/ansible-role-bigiq_pinning_deploy_objects/issues).
 
@@ -33,6 +33,8 @@ Define the list of existing objects you want to pin and deploy.
         pins:
           - { type: "sslCertReferences", name: "demo.crt" }
           - { type: "sslKeyReferences", name: "demo.key" }
+          - { type: "iruleReferences", name: "myIrule" }
+
       - name: asm
         pins:
           - { type: "attachedPoliciesReferences", name: "myWAFpolicy1" }
@@ -82,6 +84,7 @@ Define the deployment Task Name (optional):
                   pins:
                     - { type: "sslCertReferences", name: "demo.crt" }
                     - { type: "sslKeyReferences", name: "demo.key" }
+                    - { type: "iruleReferences", name: "myIrule" }
                 - name: asm
                   pins:
                     - { type: "attachedPoliciesReferences", name: "myWAFpolicy1" }
@@ -97,6 +100,6 @@ Apache
 
 ## Author Information
 
-This role was created in 2020 by [Romain Jouhannet](https://github.com/rjouhann).
+This role was created in 2021 by [Romain Jouhannet](https://github.com/rjouhann).
 
 [1]: https://galaxy.ansible.com/f5devcentral/bigiq_pinning_deploy_objects

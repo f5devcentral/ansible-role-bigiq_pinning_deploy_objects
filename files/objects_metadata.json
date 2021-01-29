@@ -13,7 +13,10 @@
                 },
                 "sslKeyReferences": {
                     "uri": "/mgmt/cm/adc-core/working-config/sys/file/ssl-key"
-                }           
+                },
+                "iruleReferences": {
+                    "uri": "/mgmt/cm/adc-core/working-config/ltm/rule"
+                }       
             }
         },
         "shared_security": {
