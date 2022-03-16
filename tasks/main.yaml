@@ -58,7 +58,7 @@
     msg: "The CM device has not been setup. Please onboard the DCD device first."
   when: setupchk.json.isSystemSetup is not defined or not setupchk.json.isSystemSetup|bool
 
-- name: Show all objects to be pinned and deployed
+- name: Show all objects to be pinned and deployed (optional)
   vars:
     module: "{{ item.0.name }}"
     object_name: "{{ item.1.name }}"
@@ -67,7 +67,20 @@
     msg: "Module: {{ module }} - Name: {{ object_name }} - Type: {{ object_type }}"
   with_subelements:
     - "{{ modules }}"
-    - pins
+    - pin
+    - skip_missing: True
+
+- name: Show all objects to be unpinned and removed (optional)
+  vars:
+    module: "{{ item.0.name }}"
+    object_name: "{{ item.1.name }}"
+    object_type: "{{ item.1.type }}"
+  debug:
+    msg: "Module: {{ module }} - Name: {{ object_name }} - Type: {{ object_type }}"
+  with_subelements:
+    - "{{ modules }}"
+    - unpin
+    - skip_missing: True
 
 # Only identify Standalone and Cluster (with max 2 devices)
 - name: Run task to find device in BIG-IQ
@@ -83,9 +96,24 @@
     object_type: "{{ item.1.type }}"
   with_subelements:
     - "{{ modules }}"
-    - pins
+    - pin
+    - skip_missing: True
+
+- name: Run task Un-Pinning objects
+  include_tasks: "bigiq-unpinning.yaml"
+  vars:
+    module: "{{ item.0.name }}"
+    object_name: "{{ item.1.name }}"
+    object_type: "{{ item.1.type }}"
+  with_subelements:
+    - "{{ modules }}"
+    - unpin
+    - skip_missing: True
 
 # For deployment, need to specify all members of the cluster
 # machine_id2 is used for clusters here
 - name: Run task deploy objects to BIG-IP
   include_tasks: "bigiq-deploy.yaml"
+  when:
+    - not skip_deploy | bool
+    

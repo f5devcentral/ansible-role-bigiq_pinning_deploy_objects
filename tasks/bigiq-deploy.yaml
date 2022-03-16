@@ -18,7 +18,8 @@
     object_type: "{{ item.1.type }}"
   with_subelements:
     - "{{ modules }}"
-    - pins
+    - pin
+    - skip_missing: True
   when: item.0.name == "ltm"
 
 - name: Initiate objects_deploy List  - LTM
@@ -147,7 +148,8 @@
     object_type: "{{ item.1.type }}"
   with_subelements:
     - "{{ modules }}"
-    - pins
+    - pin
+    - skip_missing: True
   when: item.0.name == "shared_security"
 
 - name: Initiate objects_deploy List - Shared Security
@@ -276,7 +278,8 @@
     object_type: "{{ item.1.type }}"
   with_subelements:
     - "{{ modules }}"
-    - pins
+    - pin
+    - skip_missing: True
   when: item.0.name == "asm"
 
 - name: Initiate objects_deploy List - ASM

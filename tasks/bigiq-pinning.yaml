@@ -1,5 +1,5 @@
 ---
-- name: Show objects
+- name: Show object to pin
   debug:
     msg: "Module: {{ module }} - Name: {{ object_name }} - Type: {{ object_type }}"
 
@@ -8,7 +8,7 @@
     objects_metadata: "{{ lookup('file', 'files/objects_metadata.json', errors='strict') }}"
 
 # Get device under Pinning Policy
-- name: Get existing objects pinned on the device - Any LTM or Shared Security objects but ASM
+- name: Get existing object pinned on the device - Any LTM or Shared Security object but ASM
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}?$filter=deviceReference.machineId%20eq%20'{{ machine_id }}'"
     method: GET
@@ -19,7 +19,7 @@
   register: json_response
   when: module != "asm"
 
-- name: Get the ID of the Device under Pinning Policy - Any LTM or Shared Security objects but ASM
+- name: Get the ID of the Device under Pinning Policy - Any LTM or Shared Security object but ASM
   set_fact:
     object_pinning_id: "{{ json_response | json_query(query) }}"
   vars: 
@@ -27,7 +27,7 @@
   when: module != "asm"
 
 # Get existing object already pin on the device
-- name: Get the existing objects - Any LTM or Shared Security objects but ASM
+- name: Get the existing object - Any LTM or Shared Security object but ASM
   set_fact:
     existing_objects: "{{ json_response | json_query(query) }}"
   vars: 
@@ -35,7 +35,7 @@
   when: module != "asm"
 
 # Get device under Inactive Virtual Server
-- name: Get existing objects pinned on the device - ASM only
+- name: Get existing object pinned on the device - ASM only
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}?$filter=deviceReference.machineId%20eq%20'{{ machine_id }}'%20and%20name%20eq%20'inactive'"
     method: GET
@@ -54,7 +54,7 @@
   when: module == "asm"
 
 # Get existing object already pin on the device
-- name: Get the existing objects - ASM only
+- name: Get the existing object - ASM only
   set_fact:
     existing_objects: "{{ json_response | json_query(query) }}"
   vars: 
@@ -92,7 +92,7 @@
   when: object_id|length == 0
 
 # Not ASM
-- name: new array of the object to pin - Any LTM or Shared Security objects but ASM
+- name: new array of the object to pin - Any LTM or Shared Security object but ASM
   set_fact:
     new_object_pin: '{ "id": "{{ object_id }}", "kind": "{{ object_kind }}", "link": "https://localhost{{ objects_metadata["components"][module]["endpoints"][object_type]["uri"] }}/{{ object_id }}", "name": "{{ object_name }}"}'
   when: module != "asm"
@@ -106,7 +106,7 @@
 #- debug:
 #    var: new_object_pin
 
-- name: existing_objects + new_objects
+- name: existing_objects + new_object_pin
   set_fact:
     all_objects: "{{ existing_objects + [ new_object_pin ] }}"
 
@@ -116,7 +116,7 @@
 #- debug:
 #    var: object_id
 
-- name: Pinning objects to the device
+- name: Pinning object to the device
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}/{{ object_pinning_id }}"
     method: PATCH
