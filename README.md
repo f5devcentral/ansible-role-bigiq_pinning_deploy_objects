@@ -9,7 +9,9 @@ If you are interested for other type of objects, [open an issue on GitHub](https
 This role is perfect to use along with [F5 automation tool chain (ATC) deploy declaration](https://galaxy.ansible.com/f5devcentral/atc_deploy) galaxy role used 
 to deploy AS3 application services with BIG-IQ.
 
-*Note*: When unpining objects, the removal of those objects cannot be done with this role. It is recommended to use the BIG-IQ Evaluate & Deploy along with the following options, Source Scope: All Changes, Unused Objects: Remove Unused Objects.
+*Note: When unpining objects, the removal of those objects cannot be done with this role. It is recommended to use the BIG-IQ Evaluate & Deploy along with the following options, Source Scope: All Changes, Unused Objects: Remove Unused Objects.*
+
+Want to execute the role on BIG-IQ itself? [f5-bigiq-ansible-runner](https://github.com/f5devcentral/f5-big-iq-pm-team/tree/master/f5-bigiq-ansible-runner).
 
 ## Role Variables
 
