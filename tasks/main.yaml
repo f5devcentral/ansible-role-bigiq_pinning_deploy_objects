@@ -110,10 +110,19 @@
     - unpin
     - skip_missing: True
 
+#### for items in pin => DEPLOY
 # For deployment, need to specify all members of the cluster
 # machine_id2 is used for clusters here
 - name: Run task deploy objects to BIG-IP
   include_tasks: "bigiq-deploy.yaml"
+  when:
+    - not skip_deploy | bool
+
+#### for items in unpin => EVAL ONLY
+# For deployment, need to specify all members of the cluster
+# machine_id2 is used for clusters here
+- name: Run task deploy objects to BIG-IP
+  include_tasks: "bigiq-evaluation-only.yaml"
   when:
     - not skip_deploy | bool
     
